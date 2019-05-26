@@ -18,7 +18,7 @@ void enter(char filename[128]){
         }
     }
     //проверка на двоеточие
-    /*
+
     for (int i = 0; i<128; i++){
         if (filename[i] == ':') {
             if ((i!=1) || !isalpha(filename[0]) || (filename[2]!='\\')) {
@@ -26,7 +26,7 @@ void enter(char filename[128]){
                     cout<<"incorrect filename\n";
             }
         }
-    }*/
+    }
     //проверка расширения
     const char* format = strrchr(filename,'.');
     const char* txt = ".txt";
@@ -38,43 +38,50 @@ void enter(char filename[128]){
     }
 }
 
+size_t findtext(char str[128], char* data)
+{
+    size_t strlength = strlen(str);
+    size_t count = 0;
+   for ( size_t i=0; data[i]!='\0';i++ )
+   {
+      for (size_t j =0; j<strlength;j++){
+              if (data[i+j]==str[j]){
+                if (j==strlength-1){count++;};
+              }else break;
+      }
+   }
+   return count;
+}
+
 int main()
 {
     char filename[128];
     enter(filename);
-   char dir[128] = "C:\\Users\\u211-19\\Desktop\\laba2\\";
-    strcat(dir,filename);
-    cout<<dir;
+    cout<<filename;
 
-    FILE * file = fopen(dir, "r");
+    FILE * file = fopen(filename, "r");
 
     fseek(file, SEEK_SET,SEEK_END-SEEK_SET);
     size_t length = ftell(file);
     length/=sizeof(char);
-    cout << endl;
-    cout<< length;
-    cout << endl;
+
     char *data = new char[length];
 
-   //char * data = (char*) malloc(sizeof(char) * length);
-   //
-   // data = "qqipt";
    fseek(file,0,0);
-    int len = fread(data, sizeof(char),length,file);
-    data[len]='\0';
-    cout<<len;
-  //  fgets(data,length,file);
+     length = fread(data, sizeof(char),length,file);
+    data[length]='\0';
+    fclose(file);
 
-    //fclose(file)
-    cout << endl;
-    //cout.write(data, length);
-    cout<< (data);
-    cout << endl;
     char usstring[128];
-    cout << "Enter string" << endl;
-   // cin>> usstring;
+    cout << endl<< "Enter string" << endl;
+    cin>> usstring;
 
+    cout << endl;
 
+  size_t srtcount = findtext(usstring, data);
+    cout << srtcount;
+
+    delete[] data;
 
    /*
     const size_t MAX_SIZE = 256;
