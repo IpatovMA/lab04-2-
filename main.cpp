@@ -41,16 +41,16 @@ void enter(char filename[128]){
 size_t findtext(char str[128], char* data)
 {
     size_t strlength = strlen(str);
-    size_t count = 0;
+    size_t occur = 0;
    for ( size_t i=0; data[i]!='\0';i++ )
    {
       for (size_t j =0; j<strlength;j++){
               if (data[i+j]==str[j]){
-                if (j==strlength-1){count++;};
+                if (j==strlength-1){occur++;};
               }else break;
       }
    }
-   return count;
+   return occur;
 }
 
 int main()
@@ -76,35 +76,10 @@ int main()
     cout << endl<< "Enter string" << endl;
     cin>> usstring;
 
-    cout << endl;
-
-  size_t srtcount = findtext(usstring, data);
-    cout << srtcount;
+  size_t occurcount = findtext(usstring, data);
+    cout <<"Occurance number "<< occurcount;
 
     delete[] data;
 
-   /*
-    const size_t MAX_SIZE = 256;
-    char text[MAX_SIZE];
-    char* fgets(char* str, int count, FILE* stream);
-    //stdin       expression of type FILE* associated with the input stream;
-    fgets(text, MAX_SIZE, stdin);
-    const char* separators = " \r\n,.!?:;()-";
-    const char* start = text;
-    while (true)
-    {
-        const size_t separator_count = strspn(start, separators);
-        start += separator_count;
-        if (start[0] == '\0')
-        {
-            break;
-        }
-        const size_t word_length = strcspn(start, separators);
-        cout.write(start, word_length);
-        cout << '\n';
-        start += word_length;
-    }
-
-*/
     return 0;
 }
